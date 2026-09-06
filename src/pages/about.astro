@@ -3,6 +3,82 @@
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="About">
-  <h1>About Me</h1>
-  <p>Write your bio here in plain HTML, or import a Markdown file if you prefer.</p>
+  <div class="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 not-prose -mt-12">
+
+    <!-- Left column: image -->
+    <div>
+      <img
+        src="/me.jpg"
+        alt="Andy Liu"
+        class="w-full aspect-[4/5] object-cover rounded-2xl shadow-sm"
+      />
+      <h1 class="text-9xl font-extrabold mb-2 mt-4">About Me</h1>
+    </div>
+
+    <!-- Right column: content -->
+    <div class="prose prose-neutral max-w-xl">
+      <h2 class="text-3xl font-bold mt-1 mb-3">Who Am I?</h2>
+      <p class="text-xl">
+        Someone who wants to learn more, do more, be more 
+        <br> for more than just myself, my family, my friends.
+      </p>
+
+      <h2 class="text-3xl font-bold mt-6 mb-3">What I'm Working On</h2>
+      <p class="text-xl">
+        Landing an internship for 2027.
+      </p>
+
+   <h2 class="text-3xl font-bold mt-6 mb-2">Education</h2>
+
+<div class="relative border-l border-gray-300 pl-8 space-y-10">
+
+  <div class="relative">
+    <span class="absolute -left-[calc(2rem+5px)] top-1.5 w-2.5 h-2.5 rounded-full bg-gray-900"></span>
+    <p class="text-sm text-gray-500 mb-1">2024 – Present</p>
+    <p class="text-xl font-semibold text-gray-900"><a
+      href="https://engsci.utoronto.ca/program/what-is-engsci/"
+      target="_blank" class="hover:underline">Engineering Science</a> @ University of Toronto</p>
+    <p class="text-gray-600 mt-1">
+      Majoring in <strong>Electrical and Computer Engineering</strong> <br>
+      Minoring in <strong>Robotics/Mechatronics</strong> and <strong>Artificial Intelligence</strong>
+    </p>
+  </div>
+
+  <div class="relative -mt-6">
+    <span class="absolute -left-[calc(2rem+5px)] top-1.5 w-2.5 h-2.5 rounded-full bg-gray-300 "></span>
+    <p class="text-sm text-gray-500 mb-1">2023 – 2024</p>
+    <p class="text-xl font-semibold text-gray-900">Financial Analysis / Risk Management @ University of Waterloo</p>
+  </div>
+
+   <details class="group -mt-8">
+    <summary class="cursor-pointer list-none flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition">
+      View earlier education
+      <span class="transition-transform group-open:rotate-90">›</span>
+    </summary>
+
+    <div class="relative mt-4">
+      <span class="absolute -left-[calc(2rem+5px)] top-1.5 w-2.5 h-2.5 rounded-full bg-gray-300"></span>
+      <p class="text-sm text-gray-500 mb-1">Prior</p>
+      <p class="text-xl font-semibold text-gray-900">STEM Program @ Unionville High School</p>
+    </div>
+  </details>
+
+</div>
+
+      <h2 class="text-3xl font-bold mt-6 mb-3">Beyond Engineering</h2>
+      <p class="text-lg leading-relaxed max-w-xl">
+      I like to dabble in a bit of everything. <br></p>
+      <p class="text-lg mt-2 leading-relaxed" >
+      From writing songs in my bedroom to
+      playing pick-up basketball at the park; <br>
+      making vlogs of a day-in-my-life to  
+      reading classics on the GO train; <br>
+      tasting the world in my home kitchen to 
+      exploring the city after sunset.<br>
+    </p>
+    <p class="text-lg leading-relaxed max-w-xl italic mt-3">
+      "You only live once, but if you do it right, once is enough." - Mae West <br></p>
+    </div>
+
+  </div>
 </Layout>
