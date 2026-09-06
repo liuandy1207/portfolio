@@ -1,0 +1,38 @@
+---
+// src/pages/contact.astro
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Contact">
+  <div class="not-prose max-w-xl">
+    <h1 class="text-5xl font-extrabold mb-6">Let's talk.</h1>
+
+    <p class="text-lg text-gray-600 leading-relaxed mb-10">
+      I'm currently looking for internship opportunities in robotics and AI —
+      feel free to reach out.
+    </p>
+
+    <a
+      href="mailto:you@example.com"
+      class="block text-2xl font-semibold text-gray-900 hover:underline mb-8"
+    >
+      you@example.com
+    </a>
+
+    <div class="flex gap-6 text-gray-500">
+      <a
+        href="https://github.com/yourusername"
+        target="_blank"
+        class="hover:text-gray-900 transition"
+      >
+        GitHub
+      </a>
+      <a
+        href="https://linkedin.com/in/yourusername"
+        target="_blank"
+        class="hover:text-gray-900 transition"
+      >
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</Layout>

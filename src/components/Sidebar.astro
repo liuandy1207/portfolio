@@ -3,6 +3,9 @@
 import { getCollection } from "astro:content";
 const projects = await getCollection("projects");
 const currentPath = Astro.url.pathname;
+
+const isProjectsActive =
+  currentPath === "/projects" || currentPath.startsWith("/projects/");
 ---
 
 <aside
@@ -29,30 +32,48 @@ const currentPath = Astro.url.pathname;
     <div class="flex flex-col gap-1">
       <div
         class={`flex items-center justify-between rounded-md transition ${
-          currentPath === "/projects"
+          isProjectsActive
             ? "bg-white text-gray-900"
             : "text-gray-300 hover:bg-white/10 hover:text-white"
         }`}
       >
         <a href="/projects" id="projects-link" class="flex items-center gap-2 flex-1 px-3 py-2">
-          <span class="material-symbols-outlined text-lg" id="folder-icon-closed">folder</span>
-          <span class="material-symbols-outlined text-lg !hidden" id="folder-icon-open">folder_open</span>
+          <span
+            class={`material-symbols-outlined text-lg ${isProjectsActive ? "!hidden" : ""}`}
+            id="folder-icon-closed"
+          >
+            folder
+          </span>
+          <span
+            class={`material-symbols-outlined text-lg ${isProjectsActive ? "" : "!hidden"}`}
+            id="folder-icon-open"
+          >
+            folder_open
+          </span>
           Projects
         </a>
         <button
           type="button"
           id="projects-toggle"
-          aria-expanded="false"
+          aria-expanded={isProjectsActive ? "true" : "false"}
           aria-label="Toggle projects list"
           class="px-3 py-2 rounded-md hover:bg-white/10 transition"
         >
-          <span id="projects-arrow" class="inline-block transition-transform text-3xl leading-none">›</span>
+          <span
+            id="projects-arrow"
+            class="inline-block transition-transform text-2xl leading-none"
+            style={isProjectsActive ? "transform: rotate(90deg)" : ""}
+          >
+            ›
+          </span>
         </button>
       </div>
 
       <div
         id="projects-list"
-        class="hidden ml-3 mt-1 flex flex-col gap-1 border-l border-white/20 pl-3"
+        class={`ml-3 mt-1 flex flex-col gap-1 border-l border-white/20 pl-3 ${
+          isProjectsActive ? "" : "hidden"
+        }`}
       >
         {
           projects.map((project) => {

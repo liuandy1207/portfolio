@@ -1,0 +1,20 @@
+---
+// src/pages/projects.astro
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+
+// Most recent first
+const sortedProjects = allProjects.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+<Layout title="Projects">
+  <h1 class="text-5xl font-extrabold mb-10 not-prose">Projects</h1>
+
+  <div class="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-8 not-prose">
+    {sortedProjects.map(project => <ProjectCard project={project} />)}
+  </div>
+</Layout>
