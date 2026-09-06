@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Sedgwick+Ave&display=swap');
+
+
+body {
+  font-family: 'Noto', sans-serif;
+}
+
+@keyframes reveal {
+  0% {
+    background-color: transparent;
+    color: transparent;
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+.reveal {
+  animation: reveal 1.5s ease forwards;
+  animation-delay: 0.5s;
+}

@@ -1,0 +1,31 @@
+---
+// src/layouts/Layout.astro
+import Sidebar from '../components/Sidebar.astro';
+import '../styles/global.css';
+const { title, showResumeButton = true } = Astro.props;
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{title ?? 'Home'}</title>
+</head>
+<body class="bg-white text-gray-900">
+  <Sidebar />
+
+  {showResumeButton && (
+  <a
+    href="./public/Andy-Liu-Resume.pdf"
+    download
+    class="fixed top-6 right-6 z-50 bg-gray-900 text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-gray-700 transition duration-200 shadow-sm"
+  >
+    Download Resume
+  </a>
+  )}
+
+  <main class="ml-64 min-h-screen px-12 py-20">
+    <div class="prose prose-neutral">
+      <slot />
+    </div>
+  </main>
+</body>
+</html>

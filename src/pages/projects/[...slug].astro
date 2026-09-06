@@ -1,0 +1,23 @@
+---
+// src/pages/projects/[...slug].astro
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+<Layout title={project.data.title}>
+  <Image src={project.data.cover} alt={project.data.title} class="rounded-xl mb-8 not-prose" />
+  <h1>{project.data.title}</h1>
+  <p class="text-gray-500">{project.data.date.toDateString()}</p>
+  <Content />
+</Layout>

@@ -1,0 +1,11 @@
+---
+import { Image } from 'astro:assets';
+const { project } = Astro.props;
+---
+<a href={`/projects/${project.slug}`} class="block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+  <Image src={project.data.cover} alt={project.data.title} class="w-full h-48 object-cover" />
+  <div class="p-4">
+    <h3 class="font-semibold text-lg">{project.data.title}</h3>
+    <p class="text-sm text-gray-500">{project.data.description}</p>
+  </div>
+</a>
