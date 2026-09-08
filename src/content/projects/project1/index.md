@@ -12,6 +12,9 @@ gallery:
     caption: "hellow"
   - image: "./screenshot-2.png"
     caption: "goodbye"
+demoUrl: "https://google.com"
+githubUrl: "https://google.com"
+devpostUrl: "https://google.com"
 ---
 
 ## What it Does

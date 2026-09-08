@@ -52,9 +52,41 @@ const allImages = [
       </div>
     </div>
 
-    <!-- Right column: sticky carousel -->
+    <!-- Right column: sticky carousel + action buttons -->
     <div class="lg:sticky lg:top-16 lg:self-start mt-46">
       <ProjectCarousel images={allImages} alt={project.data.title} />
+
+      <div class="flex flex-col gap-3 mt-6">
+        {project.data.demoUrl && (
+          <a
+            href={project.data.demoUrl}
+            target="_blank"
+            class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
+          >
+            Try it out
+          </a>
+        )}
+
+        {project.data.githubUrl && (
+          <a
+            href={project.data.githubUrl}
+            target="_blank"
+            class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
+          >
+            GitHub
+          </a>
+        )}
+
+        {project.data.devpostUrl && (
+          <a
+            href={project.data.devpostUrl}
+            target="_blank"
+            class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
+          >
+            Devpost
+          </a>
+        )}
+      </div>
     </div>
 
   </div>
