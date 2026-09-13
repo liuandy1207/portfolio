@@ -35,7 +35,7 @@ An Arduino Nano (programmed in the Arduino IDE) runs the whole sequence, tracks 
 The biggest challenge was getting reliable color detection under changing ambient light. Testing showed that RGB readings shifted dramatically from room to room. Not to mention, the similarity of red and purple skittles required the detection boundaries to be quite small. My fix was to build a small "door" over the sensing area that blocked out most ambient light, isolating the reading conditions and making the color data far more consistent.
 
 
-The ssecond challenge was jamming during loading. Sometimes, skittles wouldn't fall into the disk's cutout cleanly enough for smooth movement. I solved this by having the skittle land just outside the cutout first, then rotating the disc underneath it, which guaranteed it would drop into the cutout every time.  
+The second challenge was jamming during loading. Sometimes, skittles wouldn't fall into the disk's cutout cleanly enough for smooth movement. I solved this by having the skittle land just outside the cutout first, then rotating the disc underneath it, which guaranteed it would drop into the cutout every time.  
 
 ## Results & Takeaways
 I received 100% on the final project thanks to a clean mechanical design and extra features like live skittle-count metrics and step-by-step progress messages on the LCD display. Though, my wiring could've been a lot cleaner. 
