@@ -2,10 +2,12 @@
 // src/components/ProjectCarousel.astro
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { getYouTubeEmbedUrl } from '../utils/youtube';
 
 type CarouselItem =
   | { type: 'image'; image: ImageMetadata; caption?: string }
-  | { type: 'video'; src: string; poster?: ImageMetadata; caption?: string };
+  | { type: 'video'; src: string; poster?: ImageMetadata; caption?: string }
+  | { type: 'youtube'; url: string; caption?: string };
 
 interface Props {
   images: CarouselItem[];
@@ -16,7 +18,7 @@ const { images, alt } = Astro.props as Props;
 ---
 
 <div class="carousel relative w-full" data-carousel>
-  <div class="carousel-track-wrapper overflow-hidden rounded-xl">
+  <div class="carousel-track-wrapper overflow-hidden rounded-xl transition-[height] duration-300 ease-out will-change-[height]" data-track-wrapper>
     <div class="carousel-track flex items-start transition-transform duration-300 ease-out" data-track>
     {images.map((item: CarouselItem, index: number) => (
         <div class="carousel-slide shrink-0 w-full mr-0">
@@ -28,14 +30,36 @@ const { images, alt } = Astro.props as Props;
               playsinline
               class="block max-h-[650px] w-auto max-w-full mx-auto rounded-xl shadow-sm bg-black"
               data-carousel-video
+              data-carousel-media
             >
               Your browser doesn't support embedded video.
             </video>
+        ) : item.type === 'youtube' ? (
+            (() => {
+              const embedUrl = getYouTubeEmbedUrl(item.url);
+              return embedUrl ? (
+                <div class="aspect-video w-full max-w-[850px] mx-auto rounded-xl shadow-sm overflow-hidden bg-black">
+                  <iframe
+                    src={embedUrl}
+                    title={item.caption || `${alt} video ${index + 1}`}
+                    class="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    data-carousel-iframe
+                    data-src={embedUrl}
+                    data-carousel-media
+                  />
+                </div>
+              ) : (
+                <p class="text-center text-red-500 py-8">Couldn't parse YouTube URL: {item.url}</p>
+              );
+            })()
         ) : (
             <Image
               src={item.image}
               alt={item.caption || `${alt} image ${index + 1}`}
               class="block max-h-[500px] w-auto max-w-full mx-auto object-contain rounded-xl shadow-sm"
+              data-carousel-media
             />
         )}
         {item.caption && (
@@ -79,13 +103,14 @@ const { images, alt } = Astro.props as Props;
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const wrapper = carousel.querySelector<HTMLElement>('[data-track-wrapper]');
     const track = carousel.querySelector<HTMLElement>('[data-track]');
     const slides = carousel.querySelectorAll<HTMLElement>('.carousel-slide');
     const prevBtn = carousel.querySelector<HTMLButtonElement>('.carousel-prev');
     const nextBtn = carousel.querySelector<HTMLButtonElement>('.carousel-next');
     const dots = carousel.querySelectorAll<HTMLButtonElement>('.carousel-dot');
 
-    if (!track || slides.length === 0) return;
+    if (!track || !wrapper || slides.length === 0) return;
 
     let currentIndex = 0;
     const total = slides.length;
@@ -97,28 +122,56 @@ const { images, alt } = Astro.props as Props;
       return slide.getBoundingClientRect().width + marginRight;
     }
 
-    // Pause and rewind any video that isn't on the active slide, so audio/
-    // playback doesn't keep running once the user scrolls past it.
-    function pauseInactiveVideos(): void {
+    // Size the wrapper to just the active slide's content (including its
+    // caption), instead of letting the row's tallest slide dictate height
+    // for every slide.
+    function updateWrapperHeight(): void {
+      const activeSlide = slides[currentIndex];
+      if (activeSlide) {
+        wrapper!.style.height = `${activeSlide.offsetHeight}px`;
+      }
+    }
+
+    // Stop playback on any slide that isn't active: pause+rewind native
+    // videos, and reload YouTube iframes (there's no direct way to "pause"
+    // an embed without the postMessage API, so reloading its src stops it).
+    function pauseInactiveMedia(): void {
       slides.forEach((slide, i) => {
+        if (i === currentIndex) return;
+
         const video = slide.querySelector<HTMLVideoElement>('[data-carousel-video]');
-        if (video && i !== currentIndex) {
+        if (video) {
           video.pause();
           video.currentTime = 0;
+        }
+
+        const iframe = slide.querySelector<HTMLIFrameElement>('[data-carousel-iframe]');
+        if (iframe && iframe.dataset.src) {
+          iframe.src = iframe.dataset.src; // reassigning stops playback
         }
       });
     }
 
     function updateCarousel(): void {
+      // Reads first — batching these avoids a forced synchronous layout
+      // that would otherwise happen if we read offsetHeight right after
+      // writing the transform above it.
       const offset = getSlideOffset();
+      const activeSlide = slides[currentIndex];
+      const activeHeight = activeSlide?.offsetHeight;
+
+      // Writes
       track!.style.transform = `translateX(-${offset * currentIndex}px)`;
+      if (activeHeight !== undefined) {
+        wrapper!.style.height = `${activeHeight}px`;
+      }
 
       dots.forEach((dot, i) => {
         dot.classList.toggle('bg-gray-900', i === currentIndex);
         dot.classList.toggle('bg-gray-300', i !== currentIndex);
       });
 
-      pauseInactiveVideos();
+      pauseInactiveMedia();
     }
 
     function goNext(): void {
@@ -142,6 +195,15 @@ const { images, alt } = Astro.props as Props;
           updateCarousel();
         }
       });
+    });
+
+    // Recalculate height once media actually loads: images already have
+    // explicit width/height from Astro so their layout is stable up front,
+    // but videos and iframes may only settle their box size after metadata
+    // or content loads.
+    carousel.querySelectorAll<HTMLElement>('[data-carousel-media]').forEach((el) => {
+      el.addEventListener('load', updateWrapperHeight);
+      el.addEventListener('loadedmetadata', updateWrapperHeight);
     });
 
     window.addEventListener('resize', updateCarousel);

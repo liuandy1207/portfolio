@@ -1,11 +1,11 @@
 ---
-title: "My First Project"
+title: "Template"
 description: "A short one-liner about it."
 cover: "./cover.png"
 startDate: "2026-08-01"
 tags: ["web", "design"]
 skills: ["arduino"]
-featured: true
+featured: false
 award: "1st place"
 gallery:
   - type: "image"
@@ -19,20 +19,16 @@ githubUrl: "https://google.com"
 devpostUrl: "https://google.com"
 ---
 
-## What it Does
-[1-2 sentences, plain language]
+## What It Does
 
-## Why I built it
+
+## How It Works
 [Context — class, hackathon, personal itch]
 
-## My role
+## My Role
 [Only needed if team project]
 
-## How it works
+## Challenges & Solutions
+
+## Results & Takeaways
 [Key technical decisions, stack, the hard part you solved]
-
-## What I learned
-[Honest reflection — even one sentence is fine]
-
-[Screenshots/GIF]
-[Links: GitHub / Live demo]

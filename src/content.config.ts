@@ -28,8 +28,13 @@ const projects = defineCollection({
       }),
       z.object({
         type: z.literal('video'),
-        src: z.string(),
+        src: z.string(), // path under public/, e.g. "/videos/demo.mp4"
         poster: image().optional(),
+        caption: z.string().optional(),
+      }),
+      z.object({
+        type: z.literal('youtube'),
+        url: z.string().url(), // paste any normal YouTube link (watch, share, or embed)
         caption: z.string().optional(),
       }),
     ])
