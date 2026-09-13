@@ -1,13 +1,13 @@
 ---
 // src/pages/projects/[...slug].astro
-import { getCollection, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import ProjectCarousel from "../../components/ProjectCarousel.astro";
-import { formatProjectDate } from "../../utils/formatDate";
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProjectCarousel from '../../components/ProjectCarousel.astro';
+import { formatProjectDate } from '../../utils/formatDate';
 
 export async function getStaticPaths() {
-  const projects = await getCollection("projects");
-  return projects.map((project) => ({
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
     params: { slug: project.id },
     props: { project },
   }));
@@ -20,9 +20,9 @@ const { Content } = await render(project);
 // to also appear there, add it to `gallery` yourself.
 const galleryItems = project.data.gallery ?? [];
 ---
-
 <Layout title={project.data.title}>
-  <div class="grid grid-cols-1 lg:grid-cols-2 not-prose">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 not-prose">
+
     <!-- Left column: text content -->
     <div>
       <p class="text-gray-500 mb-2">
@@ -31,28 +31,21 @@ const galleryItems = project.data.gallery ?? [];
 
       <h1 class="text-5xl font-bold mb-2">{project.data.title}</h1>
 
-      <p class="text-xl mb-4">{project.data.description}</p>
+      <p class="text-xl  mb-4">{project.data.description}</p>
 
       <div class="flex flex-wrap items-center gap-2 mb-4">
-        {
-          project.data.award && (
-            <span class="flex items-center gap-1 bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-full border border-amber-200 whitespace-nowrap">
-              <span class="material-symbols-outlined2 text-sm">
-                emoji_events
-              </span>
-              {project.data.award}
-            </span>
-          )
-        }
+        {project.data.award && (
+          <span class="flex items-center gap-1 bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-full border border-amber-200 whitespace-nowrap">
+            <span class="material-symbols-outlined2 text-sm">emoji_events</span>
+            {project.data.award}
+          </span>
+        )}
 
-        {
-          project.data.skills &&
-            project.data.skills.map((skill: string) => (
-              <span class="text-sm px-2 py-0.5 border border-gray-200 text-gray-600">
-                {skill}
-              </span>
-            ))
-        }
+        {project.data.skills && project.data.skills.map((skill: string) => (
+          <span class="text-sm px-2 py-0.5 border border-gray-200 text-gray-600">
+            {skill}
+          </span>
+        ))}
       </div>
 
       <div class="markdown-content">
@@ -61,50 +54,43 @@ const galleryItems = project.data.gallery ?? [];
     </div>
 
     <!-- Right column: sticky carousel + action buttons -->
-    <div class="lg:sticky lg:top-16 lg:self-start mt-10">
-      {
-        galleryItems.length > 0 && (
-          <ProjectCarousel images={galleryItems} alt={project.data.title} />
-        )
-      }
+    <div class="lg:sticky lg:top-28 lg:self-start mt-20">
+      {galleryItems.length > 0 && (
+        <ProjectCarousel images={galleryItems} alt={project.data.title} />
+      )}
 
       <div class="flex flex-col gap-3 mt-6">
-        {
-          project.data.demoUrl && (
-            <a
-              href={project.data.demoUrl}
-              target="_blank"
-              class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
-            >
-              Try it out
-            </a>
-          )
-        }
+        {project.data.demoUrl && (
+          <a
+            href={project.data.demoUrl}
+            target="_blank"
+            class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
+          >
+            Try it out
+          </a>
+        )}
 
-        {
-          project.data.githubUrl && (
-            <a
-              href={project.data.githubUrl}
-              target="_blank"
-              class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
-            >
-              GitHub
-            </a>
-          )
-        }
+        {project.data.githubUrl && (
+          <a
+            href={project.data.githubUrl}
+            target="_blank"
+            class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
+          >
+            GitHub
+          </a>
+        )}
 
-        {
-          project.data.devpostUrl && (
-            <a
-              href={project.data.devpostUrl}
-              target="_blank"
-              class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
-            >
-              Devpost
-            </a>
-          )
-        }
+        {project.data.devpostUrl && (
+          <a
+            href={project.data.devpostUrl}
+            target="_blank"
+            class="text-center bg-black text-white py-3 rounded-lg font-semibold hover:bg-black/85 transition"
+          >
+            Devpost
+          </a>
+        )}
       </div>
     </div>
+
   </div>
 </Layout>
