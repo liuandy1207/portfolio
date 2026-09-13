@@ -15,11 +15,8 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 
-// Combine cover + gallery into one array of { image, caption } for the carousel
-const allImages = [
-  { image: project.data.cover, caption: project.data.coverCaption },
-  ...(project.data.gallery ?? []),
-];
+// gallery[0] doubles as the cover, so the carousel can use the gallery as-is
+const allImages = project.data.gallery;
 ---
 <Layout title={project.data.title}>
   <div class="grid grid-cols-1 lg:grid-cols-2 not-prose">

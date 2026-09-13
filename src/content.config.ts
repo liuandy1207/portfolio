@@ -7,8 +7,6 @@ const projects = defineCollection({
   schema: ({ image }) => z.object({
   title: z.string(),
   description: z.string(),
-  cover: image(),
-  coverCaption: z.string().optional(),
   date: z.date(),
   skills: z.array(z.string()).optional(),
   featured: z.boolean().optional().default(false),
@@ -18,7 +16,7 @@ const projects = defineCollection({
       image: image(),
       caption: z.string().optional(),
     })
-  ).optional(),
+  ).min(1, 'Add at least one image — the first is used as the cover.'),
   demoUrl: z.string().url().optional(),
   githubUrl: z.string().url().optional(),
   devpostUrl: z.string().url().optional(),
