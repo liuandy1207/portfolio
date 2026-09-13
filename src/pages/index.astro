@@ -5,7 +5,9 @@ import Layout from "../layouts/Layout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 
 const projects = await getCollection("projects");
-const featuredProjects = projects.filter(project => project.data.featured).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const featuredProjects = projects
+  .filter(project => project.data.featured)
+  .sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime());
 ---
 
 <Layout title="Home" showResumeButton={false}>
@@ -34,7 +36,7 @@ const featuredProjects = projects.filter(project => project.data.featured).sort(
   </a>
 </div>
 
-  <div class="grid grid-cols-3 gap-6 not-prose">
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 not-prose">
     {featuredProjects.map((project) => <ProjectCard project={project} />)}
   </div>
 

@@ -6,15 +6,15 @@ import { getCollection } from 'astro:content';
 
 const allProjects = await getCollection('projects');
 
-// Most recent first
+// Most recent first (sorts on startDate — works for both "YYYY-MM" and "YYYY-MM-DD")
 const sortedProjects = allProjects.sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  (a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime()
 );
 ---
 <Layout title="Projects">
   <h1 class="text-5xl font-extrabold mb-10 not-prose">Projects</h1>
 
-  <div class="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-8 not-prose">
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 not-prose">
     {sortedProjects.map(project => <ProjectCard project={project} />)}
   </div>
 </Layout>

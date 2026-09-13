@@ -2,15 +2,17 @@
 title: "My First Project"
 description: "A short one-liner about it."
 cover: "./cover.png"
-date: 2026-08-01
+startDate: "2026-08-01"
 tags: ["web", "design"]
 skills: ["arduino"]
 featured: true
 award: "1st place"
 gallery:
-  - image: "./screenshot-1.png"
+  - type: "image"
+    image: "./screenshot-1.png"
     caption: "hellow"
-  - image: "./screenshot-2.png"
+  - type: "image"
+    image: "./screenshot-2.png"
     caption: "goodbye"
 demoUrl: "https://google.com"
 githubUrl: "https://google.com"

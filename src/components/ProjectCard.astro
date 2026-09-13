@@ -2,7 +2,6 @@
 // src/components/ProjectCard.astro
 import { Image } from 'astro:assets';
 const { project } = Astro.props;
-const cover = project.data.gallery[0];
 ---
 <a href={`/projects/${project.id}`} class="block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition relative">
   {project.data.award && (
@@ -12,10 +11,10 @@ const cover = project.data.gallery[0];
     </span>
   )}
 
-  <Image src={cover.image} alt={project.data.title} class="w-full h-48 object-cover" />
+  <Image src={project.data.cover} alt={project.data.title} class="w-full aspect-square object-cover" />
   <div class="p-4">
-    <h3 class="font-semibold text-2xl">{project.data.title}</h3>
-    <p class="text-md text-gray-500 mb-3">{project.data.description}</p>
+    <h3 class="font-semibold text-xl">{project.data.title}</h3>
+    <p class="text-sm text-gray-500 mb-3">{project.data.description}</p>
 
     {project.data.skills && project.data.skills.length > 0 && (
       <div class="flex flex-wrap gap-1.5">
