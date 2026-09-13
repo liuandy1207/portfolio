@@ -26,7 +26,7 @@ const { images, alt } = Astro.props as Props;
               poster={item.poster?.src}
               controls
               playsinline
-              class="w-full rounded-xl shadow-sm bg-black"
+              class="block max-h-[500px] w-auto max-w-full mx-auto rounded-xl shadow-sm bg-black"
               data-carousel-video
             >
               Your browser doesn't support embedded video.
@@ -35,7 +35,7 @@ const { images, alt } = Astro.props as Props;
             <Image
               src={item.image}
               alt={item.caption || `${alt} image ${index + 1}`}
-              class="w-full object-cover rounded-xl shadow-sm"
+              class="block max-h-[500px] w-auto max-w-full mx-auto object-contain rounded-xl shadow-sm"
             />
         )}
         {item.caption && (

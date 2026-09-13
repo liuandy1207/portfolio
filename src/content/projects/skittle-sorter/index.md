@@ -8,8 +8,8 @@ skills: ["arduino"]
 featured: false
 award: ""
 gallery:
-  - type: "video"
-    src: "/video.mov"
+  - type: "image"
+    image: "./skittle-cover.jpg"
     caption: "some caption"
 demoUrl: "https://google.com"
 githubUrl: "https://google.com"
