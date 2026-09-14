@@ -7,7 +7,8 @@ import { getYouTubeEmbedUrl } from '../utils/youtube';
 type CarouselItem =
   | { type: 'image'; image: ImageMetadata; caption?: string }
   | { type: 'video'; src: string; poster?: ImageMetadata; caption?: string }
-  | { type: 'youtube'; url: string; caption?: string };
+  | { type: 'youtube'; url: string; caption?: string }
+  | { type: 'pdf'; src: string; caption?: string };
 
 interface Props {
   images: CarouselItem[];
@@ -54,6 +55,20 @@ const { images, alt } = Astro.props as Props;
                 <p class="text-center text-red-500 py-8">Couldn't parse YouTube URL: {item.url}</p>
               );
             })()
+        ) : item.type === 'pdf' ? (
+            <div class="w-full max-w-[850px] mx-auto">
+              <iframe
+                src={item.src}
+                title={item.caption || `${alt} document ${index + 1}`}
+                class="w-full h-[700px] rounded-xl shadow-sm border border-gray-200 bg-white"
+                data-carousel-media
+              />
+              <p class="text-sm text-center mt-1">
+                <a href={item.src} target="_blank" class="text-gray-500 hover:text-gray-900 hover:underline">
+                  Open PDF in new tab ↗
+                </a>
+              </p>
+            </div>
         ) : (
             <Image
               src={item.image}
@@ -135,6 +150,7 @@ const { images, alt } = Astro.props as Props;
     // Stop playback on any slide that isn't active: pause+rewind native
     // videos, and reload YouTube iframes (there's no direct way to "pause"
     // an embed without the postMessage API, so reloading its src stops it).
+    // PDF iframes don't need this — there's no playback to stop.
     function pauseInactiveMedia(): void {
       slides.forEach((slide, i) => {
         if (i === currentIndex) return;
@@ -199,8 +215,8 @@ const { images, alt } = Astro.props as Props;
 
     // Recalculate height once media actually loads: images already have
     // explicit width/height from Astro so their layout is stable up front,
-    // but videos and iframes may only settle their box size after metadata
-    // or content loads.
+    // but videos, YouTube iframes, and PDF iframes may only settle their
+    // box size after metadata or content loads.
     carousel.querySelectorAll<HTMLElement>('[data-carousel-media]').forEach((el) => {
       el.addEventListener('load', updateWrapperHeight);
       el.addEventListener('loadedmetadata', updateWrapperHeight);

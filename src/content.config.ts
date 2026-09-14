@@ -37,6 +37,11 @@ const projects = defineCollection({
         url: z.string().url(), // paste any normal YouTube link (watch, share, or embed)
         caption: z.string().optional(),
       }),
+      z.object({
+        type: z.literal('pdf'),
+        src: z.string(), // path under public/, e.g. "/docs/report.pdf"
+        caption: z.string().optional(),
+      }),
     ])
   ).optional(),
   demoUrl: z.string().url().optional(),
