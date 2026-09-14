@@ -30,6 +30,6 @@ I came up with the premise and the gameplay mechanics. I wired the hardware and 
 This project went rather smoothly. The only small challenge was finding a way to contain the device so that the joystick could move and take some force without breaking the box it was in, but I found a convienent way to pack it all together to achieve this. 
 
 ## Results & Takeaways
-Our game was well received, winning us the Video Game Theme Prize for being something rather unique that makes good use of being hardware based. People especially liked the name I came up with.
+Our game was well received, winning us the Video Game Theme Prize for being something rather unique that makes good use of being hardware based. People were quite fond of the name I came up with.
 
 I had a good time working on something much fun and creative as opposed to something more practical. I'd like to do more projects like this one in the future. 
