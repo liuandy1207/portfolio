@@ -1,6 +1,6 @@
 ---
 title: "Wannabe Wall-E"
-description: "Autonomous Robot Challenge Winner"
+description: "Autonomous Robot Challenge"
 cover: "./cover.jpg"
 startDate: "2025-02-02"
 tags: ["embedded"]
