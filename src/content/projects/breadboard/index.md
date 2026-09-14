@@ -1,6 +1,6 @@
 ---
 title: "BreadCrumb"
-description: "CNN-based Component Detector"
+description: "CNN Component Detector"
 cover: "./cover.png"
 startDate: "2026-03"
 endDate: "2026-04"
